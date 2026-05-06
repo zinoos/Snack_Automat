@@ -4,5 +4,11 @@ public class Payment {
     public double getInsertedMoney() {
         return insertedMoney;
     }
-    
+
+    public void insertMoney(double amount) {
+        if (amount > 0) {
+            insertedMoney += amount;
+        }
+    }
+
 }
