@@ -11,4 +11,8 @@ public class Payment {
         }
     }
 
+    public boolean hasEnoughMoney(double productPrice) {
+        return insertedMoney >= productPrice;
+    }
+
 }
