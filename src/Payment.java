@@ -5,31 +5,10 @@ public class Payment {
         return insertedMoney;
     }
 
-<<<<<<< HEAD
     public void insertMoney(double amount) {
-        if (amount > 0) {
-            insertedMoney += amount;
-        }
+        addFunds(amount);
     }
 
-    public boolean hasEnoughMoney(double productPrice) {
-        return insertedMoney >= productPrice;
-    }
-
-    public double completePurchase(double productPrice) {
-        double change = insertedMoney - productPrice;
-        insertedMoney = 0.0;
-        return change;
-    }
-
-    public double cancelPurchase() {
-        double change = insertedMoney;
-        insertedMoney = 0.0;
-        return change;
-    }
-
-}
-=======
     public void addFunds(double amount) {
         if (amount <= 0) {
             throw new IllegalArgumentException("Amount must be greater than zero.");
@@ -38,8 +17,18 @@ public class Payment {
         insertedMoney += amount;
     }
 
+    public boolean hasEnoughMoney(double productPrice) {
+        return insertedMoney >= productPrice;
+    }
+
     public boolean hasEnoughFunds(Product product) {
-        return product != null && insertedMoney >= product.getPrice();
+        return product != null && hasEnoughMoney(product.getPrice());
+    }
+
+    public double completePurchase(double productPrice) {
+        double change = insertedMoney - productPrice;
+        insertedMoney = 0.0;
+        return change;
     }
 
     public PaymentResult purchase(Product product) {
@@ -59,11 +48,11 @@ public class Payment {
         insertedMoney -= product.getPrice();
         product.decreaseStock();
 
-        return new PaymentResult(
-                true,
-                String.format("Dispensing %s.", product.getName()),
-                insertedMoney
-        );
+        return new PaymentResult(true, String.format("Dispensing %s.", product.getName()), insertedMoney);
+    }
+
+    public double cancelPurchase() {
+        return refund();
     }
 
     public double refund() {
@@ -76,4 +65,3 @@ public class Payment {
         insertedMoney = 0.0;
     }
 }
->>>>>>> f345c1f (Added Payment GUI elements)
