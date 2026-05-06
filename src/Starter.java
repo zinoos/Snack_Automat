@@ -70,12 +70,9 @@ public class Starter {
         topPanel.add(display, BorderLayout.CENTER);
         topPanel.add(statusLabel, BorderLayout.SOUTH);
 
-        JPanel keypad = new JPanel(new GridLayout(5, 3, 8, 8));
+        JPanel keypad = new JPanel(new GridLayout(4, 3, 8, 8));
         keypad.setOpaque(false);
 
-        addKeypadButton(keypad, "A", display);
-        addKeypadButton(keypad, "B", display);
-        addKeypadButton(keypad, "C", display);
         addKeypadButton(keypad, "1", display);
         addKeypadButton(keypad, "2", display);
         addKeypadButton(keypad, "3", display);
@@ -224,7 +221,7 @@ public class Starter {
         JButton button = createButton(value);
         button.addActionListener(e -> {
             String currentText = display.getText();
-            if (DEFAULT_DISPLAY.equals(currentText) || selectedProduct != null || !currentText.matches("[A-C0-9]+")) {
+            if (DEFAULT_DISPLAY.equals(currentText) || selectedProduct != null || !currentText.matches("[0-9]+")) {
                 selectedProduct = null;
                 display.setText(value);
             } else {
