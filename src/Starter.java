@@ -118,7 +118,7 @@ public class Starter {
         JLabel titleLabel = new JLabel("Card Payment", SwingConstants.CENTER);
         titleLabel.setFont(new Font("SansSerif", Font.BOLD, 19));
 
-        JLabel infoLabel = new JLabel("Drag card to Tap To Pay, or press PAY", SwingConstants.CENTER);
+        JLabel infoLabel = new JLabel("Drag card to Tap To Pay", SwingConstants.CENTER);
         infoLabel.setFont(new Font("SansSerif", Font.PLAIN, 13));
 
         balanceLabel = new JLabel("Ready for card payment", SwingConstants.CENTER);
@@ -141,9 +141,6 @@ public class Starter {
         cardLabel.setBounds(125, 118, 150, 92);
         makeDraggable(cardLabel, paymentArea, tapLabel);
 
-        JButton payButton = createButton("PAY");
-        payButton.addActionListener(e -> purchaseSelectedProduct());
-
         paymentArea.add(tapTextLabel, Integer.valueOf(1));
         paymentArea.add(tapLabel, Integer.valueOf(1));
         paymentArea.add(cardLabel, Integer.valueOf(2));
@@ -155,7 +152,6 @@ public class Starter {
 
         JPanel bottomPanel = new JPanel(new BorderLayout(0, 6));
         bottomPanel.setOpaque(false);
-        bottomPanel.add(payButton, BorderLayout.NORTH);
         bottomPanel.add(createCustomerInventoryPanel(), BorderLayout.CENTER);
         actionsPanel.add(bottomPanel, BorderLayout.SOUTH);
 
@@ -265,7 +261,7 @@ public class Starter {
                         if (selectedProduct != null) {
                             if (selectedProduct.isInStock()) {
                                 display.setText(String.format("%s $%.2f", selectedProduct.getName(), selectedProduct.getPrice()));
-                                setStatus(String.format("Selected %s - $%.2f. Tap or press PAY.", selectedProduct.getName(), selectedProduct.getPrice()));
+                                setStatus(String.format("Selected %s - $%.2f. Drag card to pay.", selectedProduct.getName(), selectedProduct.getPrice()));
                             } else {
                                 display.setText("OUT OF STOCK");
                                 setStatus(selectedProduct.getName() + " is out of stock.");
