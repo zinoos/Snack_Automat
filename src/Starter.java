@@ -5,7 +5,7 @@ import java.awt.event.MouseEvent;
 
 public class Starter {
     private static final String DEFAULT_DISPLAY = "SELECT";
-    private static final String SECRET_RESTOCK_CODE = "1234";
+    private static final String RESTOCK_CODE = "1234";
 
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Starter::createAndShowGui);
@@ -178,21 +178,20 @@ public class Starter {
         keypad.add(button);
     }
 
-   private static void addEnterButton(JPanel keypad, JTextField display, SnackInventory inventory) {
+    private static void addEnterButton(JPanel keypad, JTextField display, SnackInventory inventory) {
         JButton button = createButton("OK");
-        
+
         button.addActionListener(e -> {
             String enteredCode = display.getText();
-            
+
             if (!DEFAULT_DISPLAY.equals(enteredCode)) {
-                if (SECRET_RESTOCK_CODE.equals(enteredCode)) {
-                    inventory.restockAll();
-                    display.setText("RESTOCKED");
+                if (RESTOCK_CODE.equals(enteredCode)) {
+                    openAdminFrame(inventory, display);
                 } else {
                     try {
                         int productId = Integer.parseInt(enteredCode);
                         Product selectedProduct = inventory.getSnackById(productId);
-                        
+
                         if (selectedProduct != null) {
                             display.setText(selectedProduct.getName() + " $" + selectedProduct.getPrice());
                         } else {
@@ -204,8 +203,91 @@ public class Starter {
                 }
             }
         });
-        
+
         keypad.add(button);
+    }
+
+    private static void openAdminFrame(SnackInventory inventory, JTextField display) {
+        JFrame adminFrame = new JFrame("Admin Menu");
+        adminFrame.setSize(420, 320);
+        adminFrame.setLocationRelativeTo(null);
+        adminFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+
+        JPanel panel = new JPanel(new BorderLayout(0, 20));
+        panel.setBorder(BorderFactory.createEmptyBorder(20, 20, 20, 20));
+        panel.setBackground(new Color(224, 229, 233));
+
+        JLabel titleLabel = new JLabel("Choose Admin Option", SwingConstants.CENTER);
+        titleLabel.setFont(new Font("SansSerif", Font.BOLD, 20));
+
+        JRadioButton restockOption = createOptionButton("Fill all snacks to 15");
+        JRadioButton showStockOption = createOptionButton("Show current stock");
+        JRadioButton resetDisplayOption = createOptionButton("Reset keypad display");
+
+        ButtonGroup optionsGroup = new ButtonGroup();
+        optionsGroup.add(restockOption);
+        optionsGroup.add(showStockOption);
+        optionsGroup.add(resetDisplayOption);
+        restockOption.setSelected(true);
+
+        JPanel optionsPanel = new JPanel(new GridLayout(3, 1, 0, 10));
+        optionsPanel.setOpaque(false);
+        optionsPanel.add(restockOption);
+        optionsPanel.add(showStockOption);
+        optionsPanel.add(resetDisplayOption);
+
+        JButton executeButton = createButton("Execute");
+        executeButton.addActionListener(e -> {
+            if (restockOption.isSelected()) {
+                inventory.restockAll();
+                display.setText("RESTOCKED");
+            } else if (showStockOption.isSelected()) {
+                JOptionPane.showMessageDialog(
+                    adminFrame,
+                    buildStockOverview(inventory),
+                    "Current Stock",
+                    JOptionPane.INFORMATION_MESSAGE
+                );
+            } else if (resetDisplayOption.isSelected()) {
+                display.setText(DEFAULT_DISPLAY);
+            }
+        });
+
+        JButton closeButton = createButton("Close");
+        closeButton.addActionListener(e -> adminFrame.dispose());
+
+        JPanel actionPanel = new JPanel(new GridLayout(1, 2, 12, 0));
+        actionPanel.setOpaque(false);
+        actionPanel.add(executeButton);
+        actionPanel.add(closeButton);
+
+        panel.add(titleLabel, BorderLayout.NORTH);
+        panel.add(optionsPanel, BorderLayout.CENTER);
+        panel.add(actionPanel, BorderLayout.SOUTH);
+
+        adminFrame.add(panel);
+        adminFrame.setVisible(true);
+    }
+
+    private static JRadioButton createOptionButton(String text) {
+        JRadioButton optionButton = new JRadioButton(text);
+        optionButton.setOpaque(false);
+        optionButton.setFont(new Font("SansSerif", Font.PLAIN, 18));
+        optionButton.setFocusPainted(false);
+        return optionButton;
+    }
+
+    private static String buildStockOverview(SnackInventory inventory) {
+        StringBuilder builder = new StringBuilder();
+        for (Product snack : inventory.getAllSnacks()) {
+            builder.append(snack.getId())
+                .append(" - ")
+                .append(snack.getName())
+                .append(": ")
+                .append(snack.getStock())
+                .append(System.lineSeparator());
+        }
+        return builder.toString();
     }
 
     private static JButton createButton(String text) {
