@@ -261,7 +261,7 @@ public class Starter {
                         if (selectedProduct != null) {
                             if (selectedProduct.isInStock()) {
                                 display.setText(String.format("%s $%.2f", selectedProduct.getName(), selectedProduct.getPrice()));
-                                setStatus(String.format("Selected %s - $%.2f. Drag card to pay.", selectedProduct.getName(), selectedProduct.getPrice()));
+                                setStatus("Drag card to pay.");
                             } else {
                                 display.setText("OUT OF STOCK");
                                 setStatus(selectedProduct.getName() + " is out of stock.");
