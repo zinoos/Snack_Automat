@@ -4,4 +4,5 @@ public class Payment {
     public double getInsertedMoney() {
         return insertedMoney;
     }
+    
 }
