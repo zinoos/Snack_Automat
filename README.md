@@ -1,6 +1,5 @@
 # Snack_Automat
 
-Basic starter structure for a group project.
 
 ## Project layout
 
