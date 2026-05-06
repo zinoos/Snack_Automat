@@ -20,6 +20,7 @@ public class SnackInventory {
         snacks.add(new Product(106, "Trail Mix", 2.25, 6));
         snacks.add(new Product(107, "Popcorn", 1.85, 11));
         snacks.add(new Product(108, "Granola Bar", 1.30, 14));
+        snacks.add(new Product(109, "Gold Bar", 1000000, 1));
     }
 
     public List<Product> getAllSnacks() {
