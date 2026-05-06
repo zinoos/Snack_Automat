@@ -4,6 +4,7 @@ import java.util.List;
 
 public class SnackInventory {
     private final List<Product> snacks;
+    private static final int SECRET_RESTOCK_AMOUNT = 15;
 
     public SnackInventory() {
         snacks = new ArrayList<>();
@@ -32,5 +33,11 @@ public class SnackInventory {
             }
         }
         return null;
+    }
+
+    public void restockAll() {
+        for (Product snack : snacks) {
+            snack.setStock(SECRET_RESTOCK_AMOUNT);
+        }
     }
 }

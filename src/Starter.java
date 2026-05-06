@@ -4,11 +4,15 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
 public class Starter {
+    private static final String DEFAULT_DISPLAY = "SELECT";
+    private static final String SECRET_RESTOCK_CODE = "1234";
+
     public static void main(String[] args) {
         SwingUtilities.invokeLater(Starter::createAndShowGui);
     }
 
     private static void createAndShowGui() {
+        SnackInventory inventory = new SnackInventory();
         JFrame frame = new JFrame("Snack Automat");
         frame.setSize(1280, 538);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -23,13 +27,13 @@ public class Starter {
         JLabel backgroundLabel = new JLabel(new ImageIcon(scaledImage));
 
         frame.add(backgroundLabel, BorderLayout.WEST);
-        frame.add(createKeypadPanel(), BorderLayout.CENTER);
+        frame.add(createKeypadPanel(inventory), BorderLayout.CENTER);
         frame.add(createPaymentPanel(), BorderLayout.EAST);
 
         frame.setVisible(true);
     }
 
-    private static JPanel createKeypadPanel() {
+    private static JPanel createKeypadPanel(SnackInventory inventory) {
         JPanel panel = new JPanel(new BorderLayout(0, 20));
         panel.setBorder(BorderFactory.createEmptyBorder(30, 30, 30, 30));
         panel.setBackground(new Color(224, 229, 233));
@@ -39,7 +43,7 @@ public class Starter {
         display.setHorizontalAlignment(JTextField.CENTER);
         display.setFont(new Font("Monospaced", Font.BOLD, 28));
         display.setPreferredSize(new Dimension(260, 60));
-        display.setText("SELECT");
+        display.setText(DEFAULT_DISPLAY);
 
         JLabel promptLabel = new JLabel("Enter item code", SwingConstants.CENTER);
         promptLabel.setFont(new Font("SansSerif", Font.BOLD, 18));
@@ -66,7 +70,7 @@ public class Starter {
         addKeypadButton(keypad, "9", display);
         addClearButton(keypad, display);
         addKeypadButton(keypad, "0", display);
-        addEnterButton(keypad, display);
+        addEnterButton(keypad, display, inventory);
 
         panel.add(topPanel, BorderLayout.NORTH);
         panel.add(keypad, BorderLayout.CENTER);
@@ -159,7 +163,7 @@ public class Starter {
     private static void addKeypadButton(JPanel keypad, String value, JTextField display) {
         JButton button = createButton(value);
         button.addActionListener(e -> {
-            if ("SELECT".equals(display.getText())) {
+            if (DEFAULT_DISPLAY.equals(display.getText())) {
                 display.setText(value);
             } else {
                 display.setText(display.getText() + value);
@@ -170,15 +174,21 @@ public class Starter {
 
     private static void addClearButton(JPanel keypad, JTextField display) {
         JButton button = createButton("CLR");
-        button.addActionListener(e -> display.setText("SELECT"));
+        button.addActionListener(e -> display.setText(DEFAULT_DISPLAY));
         keypad.add(button);
     }
 
-    private static void addEnterButton(JPanel keypad, JTextField display) {
+    private static void addEnterButton(JPanel keypad, JTextField display, SnackInventory inventory) {
         JButton button = createButton("OK");
         button.addActionListener(e -> {
-            if (!"SELECT".equals(display.getText())) {
-                display.setText("Code: " + display.getText());
+            String enteredCode = display.getText();
+            if (!DEFAULT_DISPLAY.equals(enteredCode)) {
+                if (SECRET_RESTOCK_CODE.equals(enteredCode)) {
+                    inventory.restockAll();
+                    display.setText("RESTOCKED");
+                } else {
+                    display.setText("Code: " + enteredCode);
+                }
             }
         });
         keypad.add(button);
