@@ -14,7 +14,7 @@ public class Starter {
 
         frame.setLayout(new FlowLayout(FlowLayout.LEFT, 0, 0));
 
-        ImageIcon icon = new ImageIcon("C:\\Users\\zinob\\Documents\\Snack_Automat\\assets\\automat.png");
+        ImageIcon icon = new ImageIcon("assets/automat.png");
         Image image = icon.getImage();
 
         Image scaledImage = image.getScaledInstance(312, 538, Image.SCALE_SMOOTH);
