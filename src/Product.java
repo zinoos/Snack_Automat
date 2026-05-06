@@ -1,7 +1,7 @@
 public class Product {
     private final int id;
     private final String name;
-    private final double price;
+    private double price;
     private int stock;
 
     public Product(int id, String name, double price, int stock) {
@@ -21,6 +21,13 @@ public class Product {
 
     public double getPrice() {
         return price;
+    }
+
+    public void setPrice(double price) {
+        if (price < 0) {
+            throw new IllegalArgumentException("Price cannot be negative.");
+        }
+        this.price = price;
     }
 
     public int getStock() {
