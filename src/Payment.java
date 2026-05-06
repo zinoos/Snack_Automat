@@ -15,4 +15,16 @@ public class Payment {
         return insertedMoney >= productPrice;
     }
 
+    public double completePurchase(double productPrice) {
+        double change = insertedMoney - productPrice;
+        insertedMoney = 0.0;
+        return change;
+    }
+
+    public double cancelPurchase() {
+        double change = insertedMoney;
+        insertedMoney = 0.0;
+        return change;
+    }
+
 }
