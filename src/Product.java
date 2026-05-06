@@ -30,4 +30,14 @@ public class Product {
     public void setStock(int stock) {
         this.stock = stock;
     }
+
+    public boolean isInStock() {
+        return stock > 0;
+    }
+
+    public void decreaseStock() {
+        if (stock > 0) {
+            stock--;
+        }
+    }
 }
