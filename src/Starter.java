@@ -178,19 +178,33 @@ public class Starter {
         keypad.add(button);
     }
 
-    private static void addEnterButton(JPanel keypad, JTextField display, SnackInventory inventory) {
+   private static void addEnterButton(JPanel keypad, JTextField display, SnackInventory inventory) {
         JButton button = createButton("OK");
+        
         button.addActionListener(e -> {
             String enteredCode = display.getText();
+            
             if (!DEFAULT_DISPLAY.equals(enteredCode)) {
                 if (SECRET_RESTOCK_CODE.equals(enteredCode)) {
                     inventory.restockAll();
                     display.setText("RESTOCKED");
                 } else {
-                    display.setText("Code: " + enteredCode);
+                    try {
+                        int productId = Integer.parseInt(enteredCode);
+                        Product selectedProduct = inventory.getSnackById(productId);
+                        
+                        if (selectedProduct != null) {
+                            display.setText(selectedProduct.getName() + " $" + selectedProduct.getPrice());
+                        } else {
+                            display.setText("NOT FOUND");
+                        }
+                    } catch (NumberFormatException ex) {
+                        display.setText("INVALID CODE");
+                    }
                 }
             }
         });
+        
         keypad.add(button);
     }
 
