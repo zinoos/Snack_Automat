@@ -1,3 +1,5 @@
+package snackautomat.model;
+
 public class PaymentResult {
     private final boolean successful;
     private final String message;

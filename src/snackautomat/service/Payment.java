@@ -1,3 +1,8 @@
+package snackautomat.service;
+
+import snackautomat.model.PaymentResult;
+import snackautomat.model.Product;
+
 public class Payment {
     private double insertedMoney = 0.0;
 
