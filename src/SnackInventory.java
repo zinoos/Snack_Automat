@@ -12,15 +12,15 @@ public class SnackInventory {
     }
 
     private void loadDefaultSnacks() {
-        snacks.add(new Product(101, "Chips", 1.50, 10));
-        snacks.add(new Product(102, "Chocolate Bar", 1.25, 8));
-        snacks.add(new Product(103, "Gummy Bears", 1.75, 12));
-        snacks.add(new Product(104, "Pretzels", 1.40, 9));
-        snacks.add(new Product(105, "Cookies", 1.95, 7));
-        snacks.add(new Product(106, "Trail Mix", 2.25, 6));
-        snacks.add(new Product(107, "Popcorn", 1.85, 11));
-        snacks.add(new Product(108, "Granola Bar", 1.30, 14));
-        snacks.add(new Product(109, "Gold Bar", 1000000, 1));
+        snacks.add(new Product(101, "Chips", 1.50, 0));
+        snacks.add(new Product(102, "Chocolate Bar", 1.25, 0));
+        snacks.add(new Product(103, "Gummy Bears", 1.75, 0));
+        snacks.add(new Product(104, "Pretzels", 1.40, 0));
+        snacks.add(new Product(105, "Cookies", 1.95, 0));
+        snacks.add(new Product(106, "Trail Mix", 2.25, 0));
+        snacks.add(new Product(107, "Popcorn", 1.85, 0));
+        snacks.add(new Product(108, "Granola Bar", 1.30, 0));
+        snacks.add(new Product(109, "Gold Bar", 1000000, 0));
     }
 
     public List<Product> getAllSnacks() {
